@@ -5,19 +5,27 @@ body{
     font-family: 'Jersey 10', sans-serif;
 }
 
+.perguntaAberta-tudo{
+    width: 100vw;
+}
 
 .perguntaAberta-icone-raio {
     position: absolute;
-    top: 5px;
+    top: 0px;
     width: 70px;
     height: 70px;
     padding-top: 10px;
+    margin-left: 0px;
 }
 
+
+
 .perguntaAberta-flashcards{
+    position: absolute;
+    top: 2px;
     color: #fff;
     font-size: 70px;
-    padding-left: 70px;
+    margin-left: 60px;
 }
 
 .perguntaAberta-pergunta{
@@ -26,11 +34,11 @@ body{
     background-color: #FFD302;
     padding-top: 30px;
     padding-bottom: 30px;
-    margin-top: 150px;
+    margin-top: 100px;
     font-size: 30px;
 }
 
-#perguntaAberta-text{
+#pergunta1{
     color: #ABA5A5;
     width: 900px;
     height: 40px;
@@ -42,11 +50,25 @@ body{
     border: none;
 }
 
+#digite{
+    font-family: 'Jersey 10', sans-serif;
+    font-size: 20px;
+    text-align: center;
+}
+
 .perguntaAberta-resposta{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 50px;
+}
+
+#digite{
+    background-color: #fff;
+    padding: 15px;
+    width: 800px;
+    border-radius: 10px;
 }
 
 .perguntaAberta-botaoEnviar{
@@ -73,4 +95,8 @@ body{
 .perguntaAberta-botaoEnviar:hover {
     background-color: #4FA3A9;
     transform: scale(1.05);
+}
+
+#respostaCorreta{
+    color: #23ef23;
 }

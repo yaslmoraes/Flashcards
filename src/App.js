@@ -1,4 +1,5 @@
 import React from "react";
+import { TimerProvider } from './TimerContext';
 import TelaInicial from "./TelaInicial";
 import Comecar from "./Comecar";
 import Tutorial from "./Tutorial";
@@ -11,6 +12,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
 
   return (
+    <TimerProvider> {/* Envolvendo a árvore de componentes com o TimerProvider */}
     <Router>
       <div className="app">
         <Routes>
@@ -24,6 +26,7 @@ function App() {
         </Routes>
       </div>
     </Router>
+    </TimerProvider>
   );
 }
 

@@ -28,7 +28,7 @@ function Pontuacao() {
                         <div className="pontuacao-flashcards">FLASHCARDS</div>
                         <div className="pontuacao-text-shadow1">FLASHCARDS</div>
                     </div>
-                    <span className="java">JAVA</span>
+                    <span className="pontuacao-java">JAVA</span>
                     <div className="pontuacao-edition-wrapper">
                         <div className="pontuacao-edition">edition</div>
                         <div className="pontuacao-text-shadow2">edition</div>
@@ -41,12 +41,12 @@ function Pontuacao() {
                     <div className="melhores-container">
                         <img 
                             src={MoedaIcone}  
-                            className="icone-moeda"   
+                            className="pontuacao-icone-moeda"   
                             alt="Ícone moeda" 
                         />
                         <span className="melhores-pontuacoes">Melhores Pontuações:</span>
                     </div>
-                    <ol>
+                    <ol className="pontuacao-ranking">
                         {pontuacoes.length > 0 ? (
                             pontuacoes.map((usuario, index) => (
                                 <li key={index}>

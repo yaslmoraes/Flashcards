@@ -33,7 +33,8 @@ function Tutorial() {
               <div className="texto2-tutorial">
                 <li>
                   Lembre-se de que cada vírgula importa, caso algo esteja minimamente fora de ordem, ou faltando um ponto e vírgula,
-                  a sua resposta será considerada errada.
+                  a sua resposta será considerada errada. Nas questões abertas preste atenção no enunciado para cumprir todos os requisitos, como,
+                  nome de variáveis, valores e outros detalhes.
                 </li>
               </div>
             </div>

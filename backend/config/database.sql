@@ -42,13 +42,92 @@ INSERT INTO respostas (resposta, correta, id_questao)
 VALUES ('VVVV', TRUE, 1);
 
 INSERT INTO questoes (enunciado, tipo) 
-VALUES ('Declare uma variável inteira em java com o valor 10!', 'aberta');
+VALUES ('Declare uma variável chamada numero inteira em java com o valor 10!', 'aberta');
 
 INSERT INTO respostas (resposta, correta, id_questao) 
-VALUES ('int numero = 10; int fatorial = 1; for (int i = 1; i <= numero; i++) { fatorial *= i; }', TRUE, 2);
+VALUES ('int numero = 10;', TRUE, 2);
 
+INSERT INTO questoes (enunciado, tipo) 
+VALUES ('
+Sobre a palavra-chave "static" em Java, marque V para as afirmativas verdadeiras e F para as falsas:
+( ) Um método static pode acessar variáveis de instância diretamente.
+( ) Um bloco static é executado quando a classe é carregada.
+( ) Um método static pode ser sobrescrito por uma subclasse.
+( ) Variáveis static pertencem à instância da classe.
+', 'optativa');
 
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FVFF', TRUE, 3);
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVFF', FALSE, 3);
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFVF', FALSE, 3);
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFFF', FALSE, 3);
 
+INSERT INTO questoes (enunciado, tipo) 
+VALUES ('Escreva um método em Java que retorne a soma de dois números inteiros.', 'aberta');
 
+INSERT INTO respostas (resposta, correta, id_questao) 
+VALUES ('public int soma(int a, int b) { return a + b; }', TRUE, 4);
 
+INSERT INTO questoes (enunciado, tipo) 
+VALUES ('
+Sobre tratamento de exceções em Java, marque V para as afirmativas verdadeiras e F para as falsas:
+( ) Uma exceção verificada (checked) precisa ser declarada ou capturada.
+( ) A palavra-chave "finally" é opcional em um bloco try-catch.
+( ) É possível ter mais de um bloco catch para um mesmo bloco try.
+( ) A exceção "NullPointerException" é uma exceção verificada.
+', 'optativa');
+
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVVF', TRUE, 5);
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVFF', FALSE, 5);
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VFFF', FALSE, 5);
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFVF', FALSE, 5);
+
+INSERT INTO questoes (enunciado, tipo) 
+VALUES ('Declare um array de inteiros em Java com 5 posições.', 'aberta');
+
+INSERT INTO respostas (resposta, correta, id_questao) 
+VALUES ('int[] array = new int[5];', TRUE, 6);
+
+INSERT INTO questoes (enunciado, tipo) VALUES ('
+Sobre a herança em Java, marque V para as afirmativas verdadeiras e F para as falsas:
+( ) Em Java, uma classe pode estender somente uma única classe.
+( ) Uma classe abstrata pode ser instanciada.
+( ) Uma subclasse herda todos os métodos da classe pai, inclusive os privados.
+( ) O modificador "protected" permite acesso apenas dentro do mesmo pacote ou por subclasses.
+', 'optativa');
+
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VFFV', TRUE, 7);
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVFF', FALSE, 7);
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFFF', FALSE, 7);
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVVV', FALSE, 7);
+
+INSERT INTO questoes (enunciado, tipo) VALUES ('
+Sobre o operador "instanceof" em Java, marque V para as afirmativas verdadeiras e F para as falsas:
+( ) O operador "instanceof" é utilizado para verificar se um objeto é instância de uma determinada classe ou interface.
+( ) Se o objeto for null, a expressão "instanceof" retorna false.
+( ) O operador "instanceof" pode ser utilizado para converter tipos.
+( ) A verificação com "instanceof" pode prevenir ClassCastException.
+', 'optativa');
+
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVFV', TRUE, 8);
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVFF', FALSE, 8);
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFVF', FALSE, 8);
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFFF', FALSE, 8);
+
+INSERT INTO questoes (enunciado, tipo) VALUES ('Escreva um código em Java que imprima os números de 1 a 5.', 'aberta');
+
+INSERT INTO respostas (resposta, correta, id_questao) 
+VALUES ('for (int i = 1; i <= 5; i++) { System.out.println(i); }', TRUE, 9);
+
+INSERT INTO questoes (enunciado, tipo) VALUES ('
+Sobre encapsulamento em Java, marque V para as afirmativas verdadeiras e F para as falsas:
+( ) O encapsulamento permite restringir o acesso direto a alguns dos componentes do objeto.
+( ) Em Java, atributos declarados como private só podem ser acessados por métodos da própria classe.
+( ) Métodos getters e setters são utilizados para acessar e modificar os atributos privados.
+( ) O encapsulamento impede completamente a modificação dos valores dos atributos de uma classe.
+', 'optativa');
+
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVVF', TRUE, 10);
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VVFF', FALSE, 10);
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('VFFF', FALSE, 10);
+INSERT INTO respostas (resposta, correta, id_questao) VALUES ('FFVF', FALSE, 10);
 

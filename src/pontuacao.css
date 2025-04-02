@@ -142,6 +142,10 @@ ol{
 
 }
 
+.pontuacao-ranking{
+    padding-top: 20px;
+}
+
 .pontuacao-botaoVoltar{
     display: flex;
     background-color: #4FA3A9;

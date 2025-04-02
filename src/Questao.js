@@ -1,57 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { TimerContext } from './TimerContext';
 
 function Questao() {
+  const { tempoRestante, setTempoRestante, isTimeUp, setIsTimeUp } = useContext(TimerContext);
   const [questao, setQuestao] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    fetch("http://localhost:5000/questaoAtual")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Questão recebida:", data);
-        if (data && data.tipo) {
-          setQuestao(data);
-        } else {
-          console.error("Resposta da API inválida:", data);
-        }
-      })
-      .catch((error) => console.error("Erro ao buscar questão:", error))
-      .finally(() => setLoading(false));
-  }, []);
-
-  useEffect(() => {
-    if (questao) {
-      console.log("Redirecionando para:", questao.tipo);
-      if (questao.tipo === "aberta") {
-        navigate("/perguntaAberta", { state: { questao } });
-      } else if (questao.tipo === "optativa") {
-        navigate("/perguntaOptativa", { state: { questao } });
-      }
-    }
-  }, [questao, navigate]);
-
-  return (
-    <div className="questao">
-      {loading ? <p>Carregando questão...</p> : <p>Redirecionando...</p>}
-    </div>
-  );
-}
-
-export default Questao;
-
-function Questao() {
-  const [questao, setQuestao] = useState(null);
-  const [respostaUsuario, setRespostaUsuario] = useState("");
   const [mensagem, setMensagem] = useState("");
-  const [respostaCorreta, setRespostaCorreta] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    // 🔹 Requisição para buscar uma questão aleatória
+    console.log("Tempo acabou: ", isTimeUp)
+    if (isTimeUp) {
+      alert("O tempo acabou!");
+      // Realiza o redirecionamento ou qualquer ação quando o tempo acabar
+      navigate('/pontuacao');  // Exemplo de redirecionamento após o tempo acabar
+    }
+  }, [isTimeUp, navigate]);
+
+  // Obtendo idUsuario e pontosAcumulados da página anterior
+  const idUsuario = location.state?.idUsuario;
+  let pontosAcumulados = location.state?.pontosAcumulados || 0;  // A pontuação acumulada vem da navegação anterior
+
+  useEffect(() => {
+    // Fetch para obter a questão atual
     fetch("http://localhost:5000/questaoAtual", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idUsuario }) // Enviando ID do usuário
     })
       .then((res) => res.json())
       .then((data) => {
@@ -59,42 +35,46 @@ function Questao() {
           setMensagem(data.error);
         } else {
           setQuestao(data);
-          setRespostaCorreta(null); // Reseta a resposta correta ao carregar nova questão
-          setMensagem(""); // Reseta a mensagem ao carregar nova questão
+          setMensagem(""); // Limpa a mensagem de erro caso tenha sucesso
         }
       })
-      .catch((error) => console.error("Erro ao buscar questão:", error));
-  }, []);
+      .catch((error) => {
+        console.error("Erro ao buscar questão:", error);
+        setMensagem("Erro ao carregar a questão.");
+      });
+  }, [idUsuario]); // Dependência de idUsuario para refazer o fetch se necessário
+
+  useEffect(() => {
+    // Redireciona dependendo do tipo da questão
+    if (questao) {
+      console.log("Redirecionando para:", questao.tipo);
+
+      // Verificando se o idQuestao está disponível
+      const idQuestao = questao.id; // Obtém o idQuestao diretamente da resposta da questão
+
+      console.log("Id da questao:", idQuestao)
+
+      if (questao.tipo === "aberta") {
+        navigate("/perguntaAberta", { state: { questao, idUsuario, pontosAcumulados } });
+      } else if (questao.tipo === "optativa") {
+        navigate("/perguntaOptativa", {
+          state: { 
+            questao, 
+            idUsuario, 
+            pontosAcumulados, 
+            idQuestao // Passando o idQuestao corretamente
+          }
+        });
+      }
+    }
+  }, [questao, idUsuario, pontosAcumulados, navigate]); // Dependências para garantir o redirecionamento correto
 
   return (
-    <>
-      <div className="logo">
-        <img src={RaioIcone} className="perguntaAberta-icone-raio" alt="Ícone de Raio" />
-        <span className="perguntaAberta-flashcards">FLASHCARDS</span>
-      </div>
-
-      <div className="perguntaAberta-pergunta">
-        <span className="pergunta1">
-          {questao ? questao.enunciado : "Carregando questão..."}
-        </span>
-      </div>
-
-      <div className="perguntaAberta-resposta">
-        <input
-          type="text"
-          placeholder="Digite a resposta"
-          value={respostaUsuario}
-          onChange={(e) => setRespostaUsuario(e.target.value)}
-        />
-        <button className="perguntaAberta-botaoEnviar" onClick={enviarResposta}>
-          <p className="perguntaAberta-enviar">Enviar</p>
-        </button>
-      </div>
-
-      {mensagem && <p>{mensagem}</p>}
-      {respostaCorreta && <p><strong>Resposta correta:</strong> {respostaCorreta}</p>}
-    </>
+    <div>
+      <h3>{mensagem || (questao ? questao.enunciado : "Carregando questão...")}</h3>
+      <p>Tempo restante: {tempoRestante}s</p>
+    </div>
   );
 }
 
-export default PerguntaAberta;
+export default Questao;
