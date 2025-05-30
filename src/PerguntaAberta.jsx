@@ -2,10 +2,10 @@ import React, { useState, useContext, useEffect} from "react";
 import "./perguntaAberta.css";
 import RaioIcone from "./public/luxa.org-pixelate-01-raio-png-removebg-preview.png";
 import { useNavigate, useLocation } from "react-router-dom";
-import { TimerContext } from './TimerContext';
+import { useTimer } from './TimerContext';
 
 function PerguntaAberta() {
-  const { tempoRestante, setTempoRestante, isTimeUp, setIsTimeUp } = useContext(TimerContext);
+  const { tempoRestante, isTimeUp } = useTimer();
   const [respostaUsuario, setRespostaUsuario] = useState("");
   const [mensagem, setMensagem] = useState("");
   const [respostaCorreta, setRespostaCorreta] = useState(null);
@@ -18,14 +18,12 @@ function PerguntaAberta() {
 
   console.log("ID do Usuário recebido:", idUsuario);
 
-    useEffect(() => {
-      console.log("Tempo acabou: ", isTimeUp)
-      if (isTimeUp) {
-        alert("O tempo acabou!");
-        // Realiza o redirecionamento ou qualquer ação quando o tempo acabar
-        navigate('/pontuacao');  // Exemplo de redirecionamento após o tempo acabar
-      }
-    }, [isTimeUp, navigate]);
+  useEffect(() => {
+    if (isTimeUp) {
+      alert("Tempo esgotado!");
+      navigate('/'); // redireciona para a tela inicial
+    }
+  }, [isTimeUp, navigate]);
 
   const enviarResposta = (pontosGanhos) => {
     if (!questao) {

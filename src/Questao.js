@@ -1,33 +1,35 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { TimerContext } from './TimerContext';
+import { useTimer } from './TimerContext';
 
 function Questao() {
-  const { tempoRestante, setTempoRestante, isTimeUp, setIsTimeUp } = useContext(TimerContext);
+  const { tempoRestante, isTimeUp, startTimer } = useTimer();
   const [questao, setQuestao] = useState(null);
   const [mensagem, setMensagem] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Começa o timer apenas na primeira vez que Questao for montado
   useEffect(() => {
-    console.log("Tempo acabou: ", isTimeUp)
+    startTimer();
+  }, []);
+
+  // Se o tempo acabar, redireciona para a tela inicial (ou onde preferir)
+  useEffect(() => {
     if (isTimeUp) {
       alert("O tempo acabou!");
-      // Realiza o redirecionamento ou qualquer ação quando o tempo acabar
-      navigate('/pontuacao');  // Exemplo de redirecionamento após o tempo acabar
+      navigate('/');  // redireciona para tela inicial
     }
   }, [isTimeUp, navigate]);
 
-  // Obtendo idUsuario e pontosAcumulados da página anterior
   const idUsuario = location.state?.idUsuario;
-  let pontosAcumulados = location.state?.pontosAcumulados || 0;  // A pontuação acumulada vem da navegação anterior
+  let pontosAcumulados = location.state?.pontosAcumulados || 0;
 
   useEffect(() => {
-    // Fetch para obter a questão atual
     fetch("http://localhost:5000/questaoAtual", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ idUsuario }) // Enviando ID do usuário
+      body: JSON.stringify({ idUsuario })
     })
       .then((res) => res.json())
       .then((data) => {
@@ -35,39 +37,32 @@ function Questao() {
           setMensagem(data.error);
         } else {
           setQuestao(data);
-          setMensagem(""); // Limpa a mensagem de erro caso tenha sucesso
+          setMensagem("");
         }
       })
-      .catch((error) => {
-        console.error("Erro ao buscar questão:", error);
+      .catch(() => {
         setMensagem("Erro ao carregar a questão.");
       });
-  }, [idUsuario]); // Dependência de idUsuario para refazer o fetch se necessário
+  }, [idUsuario]);
 
   useEffect(() => {
-    // Redireciona dependendo do tipo da questão
     if (questao) {
-      console.log("Redirecionando para:", questao.tipo);
-
-      // Verificando se o idQuestao está disponível
-      const idQuestao = questao.id; // Obtém o idQuestao diretamente da resposta da questão
-
-      console.log("Id da questao:", idQuestao)
+      const idQuestao = questao.id;
 
       if (questao.tipo === "aberta") {
         navigate("/perguntaAberta", { state: { questao, idUsuario, pontosAcumulados } });
       } else if (questao.tipo === "optativa") {
         navigate("/perguntaOptativa", {
-          state: { 
-            questao, 
-            idUsuario, 
-            pontosAcumulados, 
-            idQuestao // Passando o idQuestao corretamente
+          state: {
+            questao,
+            idUsuario,
+            pontosAcumulados,
+            idQuestao
           }
         });
       }
     }
-  }, [questao, idUsuario, pontosAcumulados, navigate]); // Dependências para garantir o redirecionamento correto
+  }, [questao, idUsuario, pontosAcumulados, navigate]);
 
   return (
     <div>
